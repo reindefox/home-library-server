@@ -1,15 +1,21 @@
 package com.reindefox.homelibraryserver.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.reindefox.homelibraryserver.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @GetMapping
+    private final UserRepository userRepository;
 
-    public String getUser() {
-        return "Hello World";
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @GetMapping("/{id}")
+    public String getUserById(@PathVariable long id) {
+        return null;
+//        return userRepository.findById(id).toString();
     }
 }
