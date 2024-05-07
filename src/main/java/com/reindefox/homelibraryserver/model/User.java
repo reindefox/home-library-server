@@ -3,6 +3,7 @@ package com.reindefox.homelibraryserver.model;
 import com.reindefox.homelibraryserver.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -14,21 +15,23 @@ public class User {
 
     @Getter
     @Setter
+    @NonNull
     private String login;
 
     @Getter
     @Setter
+    @NonNull
     private String password;
 
     @Getter
     @Setter
-    private Role role;
+    private Role role = Role.STANDARD;
 
     @Getter
     @Setter
-    private int[] readingNow;
+    private String[] readingNow;
 
     @Getter
     @Setter
-    private int[] toRead;
+    private String[] toRead;
 }
