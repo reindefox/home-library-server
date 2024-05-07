@@ -1,9 +1,7 @@
 package com.reindefox.homelibraryserver.model;
 
 import com.reindefox.homelibraryserver.enums.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +9,7 @@ import lombok.Setter;
 @Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue
     private int id;
 
     @Getter
@@ -25,8 +24,11 @@ public class User {
     @Setter
     private Role role;
 
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", login=" + login + ", password=" + password + ", role=" + role;
-    }
+    @Getter
+    @Setter
+    private int[] readingNow;
+
+    @Getter
+    @Setter
+    private int[] toRead;
 }
