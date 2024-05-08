@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -29,9 +31,11 @@ public class User {
 
     @Getter
     @Setter
-    private String[] readingNow;
+    @ElementCollection
+    private List<String> readingNow;
 
     @Getter
     @Setter
-    private String[] toRead;
+    @ElementCollection
+    private List<String> toRead;
 }
