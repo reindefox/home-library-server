@@ -41,11 +41,7 @@ public class UserController {
 
     @RequestMapping(value = "/create", params = {"login", "password"})
     public ResponseEntity<User> createUser(@RequestParam String login, @RequestParam String password) {
+        // TODO
         return null;
     }
-
-//    @RequestMapping(value = "/addbook", params = {"bookId"})
-//    public ResponseEntity<User> addReadingNow(@RequestParam int bookId) {
-//        User user = userService.getById(bookId);
-//    }
 }
