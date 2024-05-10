@@ -1,8 +1,7 @@
 package com.reindefox.homelibraryserver.service;
 
-import com.reindefox.homelibraryserver.model.Book;
-import com.reindefox.homelibraryserver.repository.UserRepository;
 import com.reindefox.homelibraryserver.model.User;
+import com.reindefox.homelibraryserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -23,22 +22,6 @@ public class UserService {
 
     public void createUser(User user) {
         userRepository.save(user);
-    }
-
-    public void addReadingNow(Book book) {
-
-    }
-
-    public void deleteReadingNow(int id) {
-
-    }
-
-    public void addToRead(Book book) {
-
-    }
-
-    public void deleteToRead(int id) {
-
     }
 
     public UserDetailsService userDetailsService() {

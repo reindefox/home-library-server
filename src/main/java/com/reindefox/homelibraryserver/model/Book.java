@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,10 +17,12 @@ public class Book {
 
     @Getter
     @Setter
+    @NotNull
     private String title;
 
     @Getter
     @Setter
+    @NotNull
     private String author;
 
     @Getter

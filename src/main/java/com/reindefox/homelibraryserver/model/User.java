@@ -1,7 +1,11 @@
 package com.reindefox.homelibraryserver.model;
 
 import com.reindefox.homelibraryserver.enums.Role;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,19 +25,14 @@ public class User implements UserDetails {
     @GeneratedValue
     private int id;
 
-    @NonNull
+    @NotNull
     private String login;
 
-    @NonNull
+    @NotNull
     private String password;
 
+    @NotNull
     private Role role = Role.USER;
-
-    @ElementCollection
-    private List<String> readingNow;
-
-    @ElementCollection
-    private List<String> toRead;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
