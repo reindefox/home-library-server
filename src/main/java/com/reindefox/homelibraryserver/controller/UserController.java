@@ -38,10 +38,4 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    @RequestMapping(value = "/create", params = {"login", "password"})
-    public ResponseEntity<User> createUser(@RequestParam String login, @RequestParam String password) {
-        // TODO
-        return null;
-    }
 }

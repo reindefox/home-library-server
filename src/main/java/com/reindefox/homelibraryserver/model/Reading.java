@@ -1,26 +1,24 @@
 package com.reindefox.homelibraryserver.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
 @Table(name = "reading")
 public class Reading {
     @Id
     @GeneratedValue
     private Long id;
 
-    @ManyToMany
+    @ManyToOne
     @NotNull
     private User user;
 
-    @ManyToMany
+    @ManyToOne
     @NotNull
     private Book book;
 }

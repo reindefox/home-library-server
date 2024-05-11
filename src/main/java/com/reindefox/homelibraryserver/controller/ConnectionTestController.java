@@ -1,5 +1,6 @@
 package com.reindefox.homelibraryserver.controller;
 
+import com.reindefox.homelibraryserver.domain.dto.TestResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class ConnectionTestController {
     @RequestMapping("/test")
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, String> test() {
-        return Collections.singletonMap("status", "ok");
+    public TestResponse test() {
+        return new TestResponse("ok");
     }
 }
