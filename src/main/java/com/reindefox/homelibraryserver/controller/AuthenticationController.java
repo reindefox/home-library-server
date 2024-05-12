@@ -1,8 +1,9 @@
 package com.reindefox.homelibraryserver.controller;
 
-import com.reindefox.homelibraryserver.domain.dto.JwtAuthenticationResponse;
 import com.reindefox.homelibraryserver.domain.dto.SignInRequest;
+import com.reindefox.homelibraryserver.domain.dto.SignInResponse;
 import com.reindefox.homelibraryserver.domain.dto.SignUpRequest;
+import com.reindefox.homelibraryserver.domain.dto.SignUpResponse;
 import com.reindefox.homelibraryserver.model.User;
 import com.reindefox.homelibraryserver.service.AuthenticationService;
 import com.reindefox.homelibraryserver.service.UserService;
@@ -26,12 +27,12 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping(value = "/login")
-    public JwtAuthenticationResponse signIn(@RequestBody @Valid SignInRequest request) {
+    public SignInResponse signIn(@RequestBody @Valid SignInRequest request) {
         return authenticationService.signIn(request);
     }
 
     @PostMapping(value = "/reg")
-    public ResponseEntity<JwtAuthenticationResponse> signUp(@RequestBody @Valid SignUpRequest request) {
+    public ResponseEntity<SignUpResponse> signUp(@RequestBody @Valid SignUpRequest request) {
         User user = userService.findByLogin(request.getUsername());
 
         if (user != null) {

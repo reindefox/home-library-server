@@ -1,18 +1,23 @@
 package com.reindefox.homelibraryserver.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue
+    @Getter
     private int id;
 
     @Getter
@@ -31,6 +36,7 @@ public class Book {
 
     @Getter
     @Setter
+    @JsonProperty("image_url")
     private String imageUrl;
 
     @Getter

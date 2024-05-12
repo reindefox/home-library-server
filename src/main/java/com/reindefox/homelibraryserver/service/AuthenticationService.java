@@ -1,8 +1,9 @@
 package com.reindefox.homelibraryserver.service;
 
-import com.reindefox.homelibraryserver.domain.dto.JwtAuthenticationResponse;
 import com.reindefox.homelibraryserver.domain.dto.SignInRequest;
+import com.reindefox.homelibraryserver.domain.dto.SignInResponse;
 import com.reindefox.homelibraryserver.domain.dto.SignUpRequest;
+import com.reindefox.homelibraryserver.domain.dto.SignUpResponse;
 import com.reindefox.homelibraryserver.enums.Role;
 import com.reindefox.homelibraryserver.model.User;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse signUp(SignUpRequest request) {
+    public SignUpResponse signUp(SignUpRequest request) {
         var user = User.builder()
                 .login(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -36,7 +37,7 @@ public class AuthenticationService {
 
         var jwt = jwtService.generateToken(user);
 
-        return new JwtAuthenticationResponse(jwt);
+        return new SignUpResponse(jwt);
     }
 
     /**
@@ -45,7 +46,7 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse signIn(SignInRequest request) {
+    public SignInResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getUsername(),
                 request.getPassword()
@@ -57,6 +58,8 @@ public class AuthenticationService {
 
         var jwt = jwtService.generateToken(user);
 
-        return new JwtAuthenticationResponse(jwt);
+        User userData = userService.findByLogin(request.getUsername());
+
+        return new SignInResponse(jwt, userData.getLogin(), userData.getRole());
     }
 }
