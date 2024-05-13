@@ -1,17 +1,13 @@
 package com.reindefox.homelibraryserver.controller;
 
-import com.reindefox.homelibraryserver.domain.dto.BookRequest;
-import com.reindefox.homelibraryserver.domain.dto.BookResponse;
 import com.reindefox.homelibraryserver.model.Book;
 import com.reindefox.homelibraryserver.service.BookService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController

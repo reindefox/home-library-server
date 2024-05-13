@@ -1,10 +1,7 @@
 package com.reindefox.homelibraryserver.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -41,5 +38,6 @@ public class Book {
 
     @Getter
     @Setter
+    @Column(columnDefinition = "text")
     private String description;
 }
