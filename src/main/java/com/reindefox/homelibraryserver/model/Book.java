@@ -5,39 +5,42 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+@Getter
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "books")
-public class Book {
+public class Book implements Serializable {
     @Id
     @GeneratedValue
-    @Getter
     private int id;
 
-    @Getter
     @Setter
     @NotNull
     private String title;
 
-    @Getter
     @Setter
     @NotNull
     private String author;
 
-    @Getter
-    @Setter
-    private int year;
-
-    @Getter
     @Setter
     @JsonProperty("image_url")
     private String imageUrl;
 
-    @Getter
     @Setter
     @Column(columnDefinition = "text")
     private String description;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "reading",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    Set<User> users = new HashSet<>();
 }
