@@ -1,5 +1,6 @@
 package com.reindefox.homelibraryserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -37,10 +38,18 @@ public class Book implements Serializable {
     @Column(columnDefinition = "text")
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "reading",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    Set<User> users = new HashSet<>();
+    @Setter
+    @Column(columnDefinition = "text")
+    private String content;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "books")
+    private Set<User> users = new HashSet<>();
+
+    @PreRemove
+    private void removeUserAssociations() {
+        for (User user : users) {
+            user.getBooks().remove(this);
+        }
+    }
 }

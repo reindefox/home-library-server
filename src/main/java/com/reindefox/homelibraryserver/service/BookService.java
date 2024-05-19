@@ -19,4 +19,8 @@ public class BookService {
     public Collection<Book> getAll() {
         return bookRepository.findAll();
     }
+
+    public BookRepository getBookRepository() {
+        return bookRepository;
+    }
 }

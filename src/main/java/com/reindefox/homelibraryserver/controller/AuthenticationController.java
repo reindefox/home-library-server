@@ -39,6 +39,8 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
 
-        return ResponseEntity.ok().body(authenticationService.signUp(request));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(authenticationService.signUp(request));
     }
 }

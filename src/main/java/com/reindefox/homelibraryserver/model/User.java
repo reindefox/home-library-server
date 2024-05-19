@@ -1,5 +1,6 @@
 package com.reindefox.homelibraryserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.reindefox.homelibraryserver.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -30,12 +31,23 @@ public class User implements UserDetails {
     @NotNull
     private Role role = Role.USER;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "reading",
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_book",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
     private Set<Book> books = new HashSet<>();
+
+    public void addBook(Book book) {
+        this.books.add(book);
+        book.getUsers().add(this);
+    }
+
+    public void removeBook(Book book) {
+        this.books.remove(book);
+        book.getUsers().remove(this);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

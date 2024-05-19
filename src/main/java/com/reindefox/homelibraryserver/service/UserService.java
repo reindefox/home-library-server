@@ -30,4 +30,8 @@ public class UserService {
     public UserDetailsService userDetailsService() {
         return this::findByLogin;
     }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
 }
