@@ -127,7 +127,8 @@ public class BookController {
     @PostMapping("/update_reading")
     private ResponseEntity<HttpStatus> updateReadingState(Authentication authentication,
                                                           @RequestBody @Valid FavoriteRequest request) {
-        User user = (User) authentication.getPrincipal();
+        User principal = (User) authentication.getPrincipal();
+        User user = userService.getById(principal.getId());
 
         Book book = bookService.getById(request.getBookId());
         if (book == null)
