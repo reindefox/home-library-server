@@ -26,11 +26,21 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    /**
+     * Запрос создания авторизации пользователя
+     * @param request данные авторизации
+     * @return JWT, логин и роль пользователя
+     */
     @PostMapping(value = "/login")
     public SignInResponse signIn(@RequestBody @Valid SignInRequest request) {
         return authenticationService.signIn(request);
     }
 
+    /**
+     * Запрос регистрации пользователя
+     * @param request данные для регистрации
+     * @return JWT
+     */
     @PostMapping(value = "/reg")
     public ResponseEntity<SignUpResponse> signUp(@RequestBody @Valid SignUpRequest request) {
         User user = userService.findByLogin(request.getUsername());

@@ -4,7 +4,6 @@ import com.reindefox.homelibraryserver.domain.dto.BookDeleteRequest;
 import com.reindefox.homelibraryserver.domain.dto.FavoriteRequest;
 import com.reindefox.homelibraryserver.model.Book;
 import com.reindefox.homelibraryserver.model.User;
-import com.reindefox.homelibraryserver.repository.UserRepository;
 import com.reindefox.homelibraryserver.service.BookService;
 import com.reindefox.homelibraryserver.service.UserService;
 import jakarta.validation.Valid;
@@ -19,6 +18,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/book")
 public class BookController {
+
     @Autowired
     private BookService bookService;
     @Autowired
@@ -51,6 +51,11 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Создание книги
+     * @param request данные книги, исключая id
+     * @return id книги
+     */
     @PostMapping("/create")
     public ResponseEntity<Integer> create(@RequestBody @Valid Book request) {
         Book newBook = new Book();
@@ -65,6 +70,11 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBook.getId());
     }
 
+    /**
+     * Изменение данных книги
+     * @param request данные книги с id
+     * @return id книги
+     */
     @PostMapping("/update")
     public ResponseEntity<Integer> update(@RequestBody @Valid Book request) {
         bookService.getBookRepository().findById(request.getId()).ifPresent(book -> {
@@ -80,6 +90,11 @@ public class BookController {
         return ResponseEntity.ok().body(request.getId());
     }
 
+    /**
+     * Удаление книги
+     * @param request данные книги с id
+     * @return id книги
+     */
     @PostMapping("/delete")
     public ResponseEntity<Integer> delete(@RequestBody @Valid BookDeleteRequest request) {
         bookService.getBookRepository().deleteById(request.getId());
@@ -87,21 +102,31 @@ public class BookController {
         return ResponseEntity.ok().body(request.getId());
     }
 
+    /**
+     * Получить все книги текущего пользователя
+     * @param authentication авторизованный пользователь
+     * @return книги пользователя
+     */
     @RequestMapping("/user_all")
     private ResponseEntity<Collection<Book>> getAllByUser(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
 
         Collection<Book> books = user.getBooks();
 
-        if (books != null) {
+        if (books != null)
             return ResponseEntity.ok().body(
                     books
             );
-        }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Проверка наличия книги в избранных у пользователя
+     * @param authentication авторизованный пользователь
+     * @param id id книги
+     * @return статус наличия
+     */
     @RequestMapping("/user_has/{id}")
     private ResponseEntity<HttpStatus> checkUserReading(Authentication authentication, @PathVariable @Valid Integer id) {
         User user = (User) authentication.getPrincipal();
@@ -114,16 +139,12 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping("/get_content/{id}")
-    private ResponseEntity<String> getBookContent(@PathVariable @Valid Integer id) {
-        Book book = bookService.getById(id);
-
-        if (book == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        return ResponseEntity.ok().body(book.getContent());
-    }
-
+    /**
+     * Добавление/удаление книги из списка читаемых пользователем
+     * @param authentication авторизованный пользователь
+     * @param request запрос
+     * @return статус добавления
+     */
     @PostMapping("/update_reading")
     private ResponseEntity<HttpStatus> updateReadingState(Authentication authentication,
                                                           @RequestBody @Valid FavoriteRequest request) {

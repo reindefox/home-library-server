@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.Map;
-
 @RestController
 public class ConnectionTestController {
+
+    /**
+     * Проверка соединения с сервером
+     * @return статус соединения
+     */
     @RequestMapping("/test")
     @ResponseStatus(HttpStatus.OK)
     public TestResponse test() {
