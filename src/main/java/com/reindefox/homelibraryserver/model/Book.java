@@ -45,4 +45,11 @@ public class Book implements Serializable {
     @JsonIgnore
     @ManyToMany(mappedBy = "books")
     private Set<User> users = new HashSet<>();
+
+    @PreRemove
+    private void preRemove() {
+        for (User user : users) {
+            user.getBooks().remove(this);
+        }
+    }
 }
