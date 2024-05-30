@@ -9,5 +9,5 @@ Backend application written for educational purposes on Spring Boot for [Android
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
 
